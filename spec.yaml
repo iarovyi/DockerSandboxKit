@@ -59,13 +59,10 @@ setup:
 
   startup:
     - command: [ "echo starting" ]
-  
+
 environment:
   variables:
-    # TODO:DO NOT PASS SECRETS HERE - generate single token for npm and nuget so no secret is passed here
-    # Some registries expose separate npm/nuget tokens but only a single domain, and only one
-    # secret can be injected by docker sandbox per domain.
-    NUGET_TOKEN: "${{ kit.args.nuget_token }}"
+    NPM_USERNAME: "${{ kit.args.npm_username }}"
 
 permissions:
   network:

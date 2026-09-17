@@ -54,11 +54,18 @@ Instead of running `codex` run `sbx run codex` and instead of `copilot` run `sbx
 ```powershell
 PS C:\MyProject> sbx run --name MyProject codex . `
     --kit git+https://github.com/iarovyi/DockerSandboxKit.git `
+    --static-mcp playwright
+```
+
+`--kit` can reference a repository, e.g. `git+https://github.com/iarovyi/DockerSandboxKit.git`, or a folder with `spec.yaml`.
+
+```powershell
+PS C:\MyProject> sbx run --name MyProject codex . `
+    --kit git+https://github.com/iarovyi/DockerSandboxKit.git `
     --static-mcp playwright `
     --kit-arg nuget_feed_url=https://example.com/nuget/v3/index.json `
     ...
 ```
-`--kit` can reference a repository, e.g. `git+https://github.com/iarovyi/DockerSandboxKit.git`, or a folder with `spec.yaml`.
 
 
 ## Customize Docker Image

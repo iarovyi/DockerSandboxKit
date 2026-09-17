@@ -22,26 +22,26 @@ PS C:\> winget install Docker.sbx
 ```powershell
 PS C:\> sbx login
 ```
-1. Authenticate codex agent
+2. Authenticate codex agent
 ```powershell
 PS C:\> sbx secret set -g openai --oauth
 ```
-2. Authenticate copilot agent
+3. Authenticate copilot agent
 ```powershell
 PS C:\> gh auth login
 gh auth token | sbx secret set -g github --force
 ```
-3. Configure private feed secrets (optional, only if your kit args reference a private registry)
+4. Configure private feed secrets (optional, only if your kit args reference a private registry)
 ```powershell
 PS C:\> sbx secret set-custom --host 'npm.example.com' --env NPM_TOKEN --value .....
 PS C:\> sbx secret set-custom --host 'nuget.example.com' --env NUGET_TOKEN --value .....
 ```
-4. Configure MCPs
+5. Configure MCPs
 ```powershell
 PS C:\> sbx mcp add my-mcp-server --url https://mcp.example.com/mcp
 sbx mcp add playwright --command npx --args @playwright/mcp@latest
 ```
-5. Configure Allowed Kit orginins
+6. Configure Allowed Kit orginins
 ```bash
 $ sbx settings set kit.allowedSources '["docker.io/","github.com/"]'
 $ sbx settings set kit.allowedSources ["*"]

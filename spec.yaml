@@ -1,0 +1,74 @@
+schemaVersion: "2"
+kind: mixin
+name: my-sandbox
+
+# All arguments are optional so the kit can be used out of the box
+# with no extra configuration (e.g. `sbx run codex . --kit .`).
+args:
+  npm_registry_url:
+    default: ""
+    description: Optional private npm registry URL (e.g. https://registry.example.com/npm/)
+  npm_username:
+    default: ""
+    description: Optional email/username used for npm registry auth
+  nuget_feed_url:
+    default: ""
+    description: Optional private NuGet feed URL (e.g. https://example.com/nuget/v3/index.json)
+  nuget_username:
+    default: ""
+    description: Optional username for the NuGet feed
+
+agentInstructions:
+  content: |
+    You are inside docker sandbox environment.
+    Don't deploy infrastructure inside this sandbox environment.
+
+setup:
+  install:
+    - command: |
+        if [ -n "${{ kit.args.npm_registry_url }}" ]; then
+          npm config set always-auth true
+          npm config set registry "${{ kit.args.npm_registry_url }}"
+          if [ -n "${{ kit.args.npm_username }}" ]; then
+            npm config set email "${{ kit.args.npm_username }}"
+          fi
+          if [ -n "$NPM_TOKEN" ]; then
+            npm config set "//$(echo ${{ kit.args.npm_registry_url }} | sed -E 's#^https?://##'):_authToken" "$NPM_TOKEN"
+          fi
+        fi
+        npm install vite -g
+      user: "1000"
+      description: Configure npm registry (optional)
+    - command: |
+        apt-get update && apt-get install -y --no-install-recommends dotnet-sdk-10.0
+        dotnet --version
+      user: "0"
+      description: Install .NET SDK 10
+    - command: |
+        if [ -n "${{ kit.args.nuget_feed_url }}" ] && [ -n "$NUGET_TOKEN" ]; then
+          dotnet nuget disable source nuget.org
+          dotnet nuget add source \
+          "${{ kit.args.nuget_feed_url }}" \
+          --name PrivateFeed \
+          --username "${{ kit.args.nuget_username }}" \
+          --password "$NUGET_TOKEN" \
+          --store-password-in-clear-text
+        fi
+      user: "1000"
+      description: Configure NuGet feed (optional)
+
+  startup:
+    - command: [ "echo starting" ]
+
+environment:
+  variables:
+    # TODO:DO NOT PASS SECRETS HERE - generate single token for npm and nuget so no secret is passed here
+    # Some registries expose separate npm/nuget tokens but only a single domain, and only one
+    # secret can be injected by docker sandbox per domain.
+    NUGET_TOKEN: "${{ kit.args.nuget_token }}"
+
+permissions:
+  network:
+    allow: 
+      - figma.com
+      - mcp.atlassian.com

@@ -4,7 +4,7 @@ Make your coding safe by truely sandboxing your coding agent inside microVM. It 
 
 You can forget about "yes" approval fatigue and risk of approving risky changes. It is ideal for giving your agent autonomy with loop engineering and YOLO mode (you only live once).
 
-![Docker Sandbox](Docker%20sandbox.png)
+![Docker Sandbox](docs/Docker%20sandbox.png)
 
 # Install
 

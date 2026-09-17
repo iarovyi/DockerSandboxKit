@@ -59,7 +59,7 @@ setup:
 
   startup:
     - command: [ "echo starting" ]
-
+  
 environment:
   variables:
     # TODO:DO NOT PASS SECRETS HERE - generate single token for npm and nuget so no secret is passed here

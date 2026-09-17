@@ -18,7 +18,11 @@ PS C:\> winget install Docker.sbx
 
 # Configure
 
-1. Authentication codex agent
+1. Login into docker account
+```powershell
+PS C:\> sbx login
+```
+1. Authenticate codex agent
 ```powershell
 PS C:\> sbx secret set -g openai --oauth
 ```

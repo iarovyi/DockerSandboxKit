@@ -2,13 +2,13 @@
 
 Make your coding safe by truely sandboxing your coding agent inside microVM. It is isolated as virtual machine but fast and convenient as container. Give agents freedom inside a boundary Not on your laptop.
 
-You can forget about "yes" approval fatigue and risk of approving risky changes. It is ideal for giving your agent autonomy with loop engineering and YOLO mode (you only live once).
+You can forget about "yes" approval fatigue and risk of approving risky changes. It is ideal for giving your agent autonomy with loop engineering and YOLO mode (you only live once). Sandboxed agent can call APIs without having access to secrets, for example it can use nuget or npm feeds without access to authentication token. Give agents capabilities but not secrets.
 
 ![Docker Sandbox](docs/Docker%20sandbox.png)
 
 # Install
 
-Install docker sandbox
+Install [docker sandbox](https://docs.docker.com/ai/sandboxes/)
 ```powershell
 PS C:\> winget install Docker.sbx
 ```
